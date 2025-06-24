@@ -26,6 +26,7 @@ public class QuickSort implements EstrategiaDeOrdenacao { // Declara a classe p�
 
             // Chama recursivamente 'quickSort' para ordenar a sub-array à direita do pivô.
             quickSort(array, indicePivot + 1, indiceFim);
+
         }
     }
 

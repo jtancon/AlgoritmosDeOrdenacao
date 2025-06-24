@@ -14,6 +14,15 @@ public class Main {
                 new QuickSort()     // Adiciona uma instância de QuickSort à lista.
         );
 
+
+        //int[] nomes = {1, 2, 3, 5, 4};
+        //System.out.print("Array original: ");
+        //imprimirArray(nomes); // Usa nosso método auxiliar para imprimir o array original
+        //new QuickSort().ordenar(nomes);
+        //System.out.print("Array ordenado (QuickSort): ");
+        //imprimirArray(nomes); // Usa nosso método auxiliar para imprimir o array após a ordenação
+        //System.out.println();
+
         // Chama um método auxiliar privado para obter um array de caminhos de arquivos (conjuntos de dados CSV).
         String[] arquivos = getArquivos();
         // Imprime uma linha separadora para melhorar a legibilidade da tabela de saída.
@@ -89,4 +98,14 @@ public class Main {
 
         return arquivos; // Retorna o array de caminhos de arquivo.
     }
+    //private static void imprimirArray(int[] array) {
+    //    System.out.print("[");
+    //    for (int i = 0; i < array.length; i++) {
+    //        System.out.print(array[i]);
+    //        if (i < array.length - 1) {
+    //            System.out.print(", ");
+    //        }
+    //    }
+    //    System.out.println("]");
+    //}
 }
