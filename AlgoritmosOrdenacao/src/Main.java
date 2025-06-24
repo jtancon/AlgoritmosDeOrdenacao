@@ -1,9 +1,9 @@
-import java.io.File; // Importa a classe File, utilizada para manipular caminhos de arquivos e diretórios.
-import java.util.List; // Importa a interface List, parte da Java Collections Framework, usada para criar coleções de objetos.
+import java.io.File;
+import java.util.List;
 
-public class Main { // Declara a classe principal do programa.
+public class Main {
 
-    public static void main(String[] args) { // Este é o método principal (main), o ponto de entrada para a execução do programa Java.
+    public static void main(String[] args) {
 
         // Inicializa uma lista imutável de objetos que implementam a interface EstrategiaDeOrdenacao.
         // Isso utiliza o padrão de design Strategy, permitindo que o programa
@@ -16,68 +16,51 @@ public class Main { // Declara a classe principal do programa.
 
         // Chama um método auxiliar privado para obter um array de caminhos de arquivos (conjuntos de dados CSV).
         String[] arquivos = getArquivos();
-
-        // --- Formatação da Saída no Console ---
         // Imprime uma linha separadora para melhorar a legibilidade da tabela de saída.
         System.out.println("---------------------------------------------------------------------------------------------------------");
-
-        // Imprime o cabeçalho da primeira coluna da tabela ("Tipo de Conjunto").
-        // %-30s formata a string para ser justificada à esquerda dentro de uma largura de 30 caracteres.
+        // Imprime o cabeçalho
         System.out.printf("%-30s", "Tipo de Conjunto");
-
         // Itera sobre cada estratégia de ordenação para imprimir seus nomes como cabeçalhos de coluna.
         for (EstrategiaDeOrdenacao estrategia : estrategias) {
             // Imprime o nome do algoritmo de ordenação (ex: "Bubble Sort (ms)")
-            // formatado para ser justificado à esquerda dentro de uma largura de 18 caracteres.
             System.out.printf(" | %-18s", estrategia.getNome() + " (ms)");
         }
-        // Imprime uma nova linha seguida por outra linha separadora para o cabeçalho da tabela.
         System.out.println("\n---------------------------------------------------------------------------------------------------------");
-        // --- Fim da Formatação da Saída no Console ---
-
 
         // Loop principal: itera sobre cada arquivo de dados (CSV) a ser processado.
         for (String arquivo : arquivos) {
             // Extrai um nome de arquivo amigável (ex: "aleatorio_100.csv") do caminho completo.
             String nomeAmigavel = new File(arquivo).getName();
-
             // Lê números inteiros do arquivo CSV atual usando a classe utilitária LeitorCSV.
             List<Integer> dados = LeitorCSV.lerNumeros(arquivo);
-
             // Verifica se a lista de dados lidos está vazia (ex: arquivo não encontrado ou vazio).
             if (dados.isEmpty()) {
                 // Se estiver vazia, imprime uma mensagem indicando o problema com o arquivo e pula para o próximo arquivo.
                 System.out.printf("%-30s | Arquivo vazio ou não encontrado!\n", nomeAmigavel);
                 continue; // Pula o restante da iteração atual do loop.
             }
-
             // Imprime o nome amigável do arquivo (tipo de conjunto de dados) na primeira coluna da linha atual.
             System.out.printf("%-30s", nomeAmigavel);
-
             // Loop interno: itera sobre cada estratégia de ordenação para testá-la com o conjunto de dados atual.
             for (EstrategiaDeOrdenacao estrategia : estrategias) {
                 // Cria uma nova cópia do array de dados original para cada algoritmo de ordenação.
                 // Isso é crucial para garantir que cada algoritmo comece com os dados não ordenados idênticos.
                 int[] copia = dados.stream().mapToInt(Integer::intValue).toArray();
-
                 // Registra o tempo de início em nanossegundos antes de iniciar a ordenação.
                 long inicio = System.nanoTime();
                 // Executa o algoritmo de ordenação no array copiado.
                 estrategia.ordenar(copia);
                 // Registra o tempo de fim em nanossegundos após a conclusão da ordenação.
                 long fim = System.nanoTime();
-
                 // Calcula o tempo decorrido em milissegundos.
                 // 1_000_000.0 é usado para divisão de ponto flutuante para obter milissegundos.
                 double tempoMs = (fim - inicio) / 1_000_000.0;
-
                 // Imprime o tempo medido para o algoritmo atual, formatado com 4 casas decimais.
                 System.out.printf(" | %-18.4f", tempoMs);
             }
             // Após todas as estratégias serem testadas para um arquivo, avança para a próxima linha para os resultados do próximo arquivo.
             System.out.println();
         }
-        // Imprime uma linha separadora final na parte inferior da tabela.
         System.out.println("---------------------------------------------------------------------------------------------------------");
     }
 
